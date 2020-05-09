@@ -1,0 +1,33 @@
+{% url 'login' as login_url %}
+{% url 'account:signup' 'Student' as signup_url %}
+{% url 'account:pricing' as pricing_url %}
+<div data-primary class="navbar navbar-expand-sm p-0 mdk-header--fixed navbar-light bg-white mdk-header--shadow" id="default-navbar">
+  <div class="container">
+
+    <!-- Navbar Brand -->
+    <a href="index.html" class="navbar-brand">
+      <img class="navbar-brand-icon" src="/assets/images/logo/black-100@2x.png" width="30" alt="{{ brand }}">
+      <span class="d-none d-md-block">{{ brand }}</span>
+    </a>
+
+    <!-- Main Navigation -->
+    <ul class="nav navbar-nav ml-auto d-none d-sm-flex">
+      <li class="nav-item{% if request.path == pricing_url %} active{% endif %}">
+        <a href="{{pricing_url}}" class="nav-link">Pricing</a>
+      </li>
+      <li class="nav-item{% if request.path == signup_url %} active{% endif %}">
+        <a href="{{signup_url}}" class="nav-link">Signup</a>
+      </li>
+      <li class="nav-item{% if request.path == login_url %} active{% endif %}">
+        <a href="{{ login_url }}" class="nav-link">Login</a>
+      </li>
+    </ul>
+    <!-- // END Main Navigation -->
+
+    <!-- Navbar toggler -->
+    <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  </div>
+</div>

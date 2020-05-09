@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block navbar %}
+  {% include 'layouts/_navbar.pricing.html' %}
+{% endblock %}
+{% block sidebar%}
+  {% include 'layouts/_account_sidebar.html' %}
+{% endblock %}
+{% block content %}
+			<div class="bg-gradient-primary py-32pt">
+                <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+                    <img src="/assets/images/logo/white-100@2x.png" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
+                    <div class="flex mb-32pt mb-md-0">
+                        <h1 class="text-white mb-0">Sign In</h1>
+                        <p class="lead measure-lead text-white-50">Account Management</p>
+                    </div>
+                    <a href="{% url 'account:pricing' %}" class="btn btn-outline-white flex-column">
+                        Don't have an account?
+                        <span class="btn__secondary-text">Sign up Today!</span>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-white pt-32pt pt-sm-64pt pb-32pt">
+                <div class="container page__container">
+                    <form action="{% url 'login' %}" method="post" class="col-md-5 p-0 mx-auto">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{form.username.id_for_label}}"> Email: </label>
+                            {{form.username|add_error_class:"is-invalid"|add_class:"form-control"|attr:"required"|attr:"placeholder:Your email address"}}                            
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.password.id_for_label}}"> Password: </label>
+                            {{form.password|add_error_class:"is-invalid"|add_class:"form-control"|attr:"required"|attr:"placeholder:Password"}}                            
+                            <p class="text-right"><a href="{% url 'password_reset' %}" class="small">Forgot your password?</a></p>                            
+                            {% if form.errors %}
+                                <p class="invalid-feedback" style="display: block;">Your username and password didn't match. Please try again.</p>
+                            {% endif %}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-accent">Login</button>
+                        </div>
+                        <input type="hidden" name="next" value="{{ next }}">
+                    </form>
+                </div>
+            </div>
+            <div class="page-separator m-0">
+                <div class="page-separator__text">or sign-in with</div>
+                <div class="page-separator__bg-top bg-white"></div>
+            </div>
+            <div class="bg-body pt-32pt pb-32pt pb-md-64pt text-center">
+                <div class="container page__container">
+                    <a href="student-dashboard.html" class="btn btn-lg btn-secondary btn-block-xs">Facebook</a>
+                    <a href="student-dashboard.html" class="btn btn-lg btn-secondary btn-block-xs">Twitter</a>
+                    <a href="student-dashboard.html" class="btn btn-lg btn-secondary btn-block-xs">Google+</a>
+                </div>
+            </div>
+{% endblock %}
