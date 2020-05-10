@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Reset Password {% endblock %}
+
+{% block navbar %}
+  {% include 'layouts/_navbar.pricing.html' %}
+{% endblock %}
+
+{% block sidebar%}
+  {% include 'layouts/_account_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="bg-gradient-primary py-32pt">
+    <div class="container d-flex flex-column flex-sm-row align-items-sm-center">
+      <div class="flex">
+        <h1 class="text-white flex mb-0">Please Verify Your E-mail Address</h1>
+        <p class="lead text-white-50">We have sent the verification e-mail to your address</p>
+      </div>
+      <p class="d-sm-none"></p>      
+    </div>
+  </div>  
+  <div class="page-section bg-white">
+    <div class="container page__container">
+      <div class="col-sm-6 mx-auto">
+        <div class="alert alert-primary" role="alert">
+          <strong>Did you receive e-mail?</strong>
+          If you didn't receive the e-mail click below button
+          <form action="" method="POST">
+          {%csrf_token%}
+          <button type="submi" class="btn btn-outline-primary btn-rounded">resend</button>          
+        </form>
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

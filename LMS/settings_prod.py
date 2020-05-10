@@ -6,3 +6,4 @@ MEDIA_ROOT = '/var/www/html/BookApp/upload'
 MEDIA_URL = '/media/'
 
 print("Debug Flase")
+DOMAIN = '103.100.62.146'

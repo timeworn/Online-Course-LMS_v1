@@ -1,11 +1,22 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
     views as auth_views,
     login as auth_login,
 )
+from django.contrib import messages
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from .token_generator import account_activation_token
+
 from LMS.constants import MEMBERSHIP, Student, Teacher, University
-from .forms import StudentSignupForm, TeacherSignupForm, UniversitySignupForm
+from .forms import StudentSignupForm, TeacherSignupForm, UniversitySignupForm, send_email_verification_code
+from .models import User
+from .decorators import role_required
+
 import json
+
 # Create your views here.
 
 
@@ -27,6 +38,33 @@ class MyLoginView(auth_views.LoginView):
             return redirect('account:pricing')
 
 
+@login_required
+def verify_email(request):
+    if request.method == 'POST':
+        send_email_verification_code(request.user, request.user.email)
+    return render(request, 'account/verify_email.html')
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(id=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_email_verified = True
+        user.save()
+        messages.info(request, 'Thank you for your email confirmation. Now you can login your account.' )
+        return redirect('login')
+        # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+# @login_required
+
+
+@role_required(role=Student)
+# @student_required(role=Student)
 def index(request):
     return render(request, 'account/index.html')
 

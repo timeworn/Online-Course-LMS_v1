@@ -9,3 +9,5 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 MEDIA_URL = '/media/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Usedin Activation Email Code Geneartor 
+DOMAIN = '127.0.0.1:8000'

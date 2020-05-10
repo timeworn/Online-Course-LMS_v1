@@ -1,10 +1,31 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from .models import User, StudentProfile, TeacherProfile, UniversityProfile
 from LMS.constants import Student, University, Teacher
+# Start Send Email Verification Import
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .token_generator import account_activation_token
+from django.core.mail import EmailMessage
+# End
+
+
+def send_email_verification_code( user, to_email):
+    email_subject = 'Activate Your Account'
+    message = render_to_string('activate_account.html', {
+        'user': user,
+        'domain': settings.DOMAIN,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+    })
+    email = EmailMessage(email_subject, message, to=[to_email])
+    email.send()
 
 
 class StudentSignupForm(forms.ModelForm):
@@ -40,6 +61,7 @@ class StudentSignupForm(forms.ModelForm):
             user.save()
         student_profile = StudentProfile.objects.create(user=user)
         student_profile.save()
+        send_email_verification_code(user, user.email)
         return user
 
 
@@ -76,6 +98,7 @@ class TeacherSignupForm(forms.ModelForm):
             user.save()
         profile = TeacherProfile.objects.create(user=user)
         profile.save()
+        send_email_verification_code(user, user.email)
         return user
 
 
@@ -119,4 +142,5 @@ class UniversitySignupForm(forms.ModelForm):
         profile.organization_name = self.cleaned_data['organization']
         profile.country = self.cleaned_data['country']
         profile.save()
+        send_email_verification_code(user, user.email)
         return user
