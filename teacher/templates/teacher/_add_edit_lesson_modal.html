@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+    <div class="modal" tabindex="-1" id="add_edit_lesson_modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class= "modal-title"> Lesson </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                    	<input type="hidden" name="action" value="edit">
+                        <div class="form-group">
+                        	<label class="form-label" for="lesson_title"> Title: </label>
+                            {{lesson_form.title| add_class:"form-control"|attr:"placeholder:Input Lesson Title"|attr:"id:lesson_title"}}
+                        </div>
+                        <div class="form-group">
+                        	<label class="form-label" for="video_url"> Video Url: </label>
+                            {{lesson_form.video_url| add_class:"form-control"|attr:"placeholder:Input Lesson Video Url"|attr:"id:video_url"}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

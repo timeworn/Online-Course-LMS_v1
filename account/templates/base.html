@@ -68,13 +68,15 @@
       {% endif %}
       
       {% block content %}
-
+      
       {% endblock %}
 
       {% include 'layouts/_website-footer.html' %}
     </div>
     <!-- // END Header Layout Content -->
   </div>
+  {% block out_header %}
+  {% endblock %}
     <!-- // END Header Layout -->
     {% block sidebar%}
       {% include 'layouts/_sidebar.html' %}
@@ -110,6 +112,8 @@
 
     <!-- Highlight.js -->
     <script src="/assets/js/hljs.js"></script>
+    <!-- Add active class for current Path -->
+    <script src="/assets/js/add_active_class.js"></script>
     {% block extra_script %}
     {% endblock %}
 </body>

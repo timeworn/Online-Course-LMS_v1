@@ -1,0 +1,246 @@
+{% extends "teacher/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block extra_style %} 
+    <style type="text/css">
+        input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            opacity:0;
+            filter: alpha(opacity=0);
+            height: 100%;
+            max-width: 100%;
+        }
+        #image_upload{
+            position: relative;            
+            width: 100%;
+            text-align: center;
+        }
+        #image_loaded{
+            max-width: 100%;
+            height: 212px;
+        }
+        .display-none{
+            display: none !important;
+        }
+        .input-hide{
+            opacity: 0;
+            position:absolute;
+            top: 50;
+            left:0;
+            height: 0;
+        }
+        .cursor-pointer{
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+	{{ block.super }}
+	  <form action="" method="POST" enctype="multipart/form-data">
+     <div class="page-section bg-white border-bottom-2">
+                <div class="container page__container">
+                    
+                        {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                                {{hidden}}
+                            {% endfor %}
+                    {{form.errors}}
+                    <div class="row">
+                        <div class="col-md">
+                            <h4>Course title</h4>
+                            <div class="form-group">
+                                {{form.title|add_class:"form-control form-control-lg"|attr:"required"|attr:"placeholder:Course title"}}
+                            </div>
+
+                            <h4>Description</h4>
+                            <div class="form-group">
+                                {{form.description|add_class:"form-control"|attr:"rows:5"|attr:"placeholder:Course description goes here.."}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 >Thumbnail</h4>
+                            <div class="form-group">
+                                <div id="image_upload" class="form-item" style="text-align: center;">
+                                    {% if form.thumbnail_url.value %}
+                                        <i id="image_default" class="fas fa-image fa-10x pointer display-none" style="color: #edf0f2"></i>
+                                        <img id="image_loaded" src="{% get_media_prefix %}{{ form.thumbnail_url.value }}" style="max-width: 100%;">
+                                    
+                                    {% else %}
+                                        <i id="image_default" class="fas fa-image fa-10x pointer" style="color: #edf0f2"></i>
+                                        <img id="image_loaded" class="display-none" style="max-width: 100%;">
+                                    {% endif %}
+                                    <input type="file" name="thumbnail_url" accept="image/*" id="image_field" class="upload">
+                               </div>
+                               
+                            </div>
+                                
+                        </div>
+ 
+                        <div class="col-md-4">
+
+                            <div class="mb-heading d-flex align-items-center">
+                                <h4 class="flex mb-0">Trailer Video</h4>
+                                {{form.trailer_video_link | add_class:"input-hide"}}
+                                <p class="text-underline" data-toggle="modal" data-target="#input_video_link"> Set </p>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="{{form.trailer_video_link.value}}" allowfullscreen="" id="trailer_video_preview"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        {{form.category|add_class:"form-control custom-select"}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group form-inline">
+                                                    <span class="input-group-prepend"><span class="input-group-text">$</span></span>
+                                                    {{form.price | add_class:"form-control"}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row justify-content-end align-items-center">
+                        <div class="col-md-4">
+                            <div class="card m-0">
+                                <div class="card-header text-right">
+                                    <button class="btn btn-accent" type="submit">Save</button>
+                                </div>
+                                <div class="list-group list-group-flush text-right">
+                                    <div class="list-group-item">
+                                    <a href="#" class="text-danger"><strong>Delete Course</strong></a>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+            <div class="container page__container page-section">
+                <div class="row">
+                    <div class="col-md">
+
+
+                        <div class="mb-heading d-flex align-items-center">
+                            <h4 class="flex mb-0">Sections</h4>                            
+                        </div>
+                        {% for section in course.section_set.all %}
+                            <div class="card stack">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-title flex mb-0 section-title">{{section.title}}</h4>
+                                    <span title="Add Lesson" class="material-icons cursor-pointer lesson-add mr-4" section-id = {{section.pk}} >
+                                        note_add
+                                    </span>
+                                    <span title="Edit Lesson" class="material-icons cursor-pointer mr-4 section-edit" section-id={{section.pk}} >
+                                        create
+                                    </span>
+
+                                    <span title="Delete Section" class="material-icons cursor-pointer section-delete" section-id = {{section.pk}} >
+                                        clear
+                                    </span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+
+                                    {% for lesson in section.lesson_set.all %}
+                                        <li class="list-group-item">
+                                            <div class="d-flex">
+                                                <div class="flex">
+                                                    <span class="mr-4"> {{lesson.title}}</span>
+                                                    <a href="{{lesson.video_url}}" target="_blank"> {{lesson.video_url}}</a>
+                                                </div>
+                                                <span title="Edit Lesson" style="font-size: 20px" class="material-icons cursor-pointer mr-4 lesson-edit" lesson-id={{lesson.pk}} > create</span>
+                                                <span style="font-size: 20px" title="Delete Lesson" class="material-icons cursor-pointer lesson-delete" lesson-id = {{lesson.pk}} >delete</span>
+                                            </div>
+                                            
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                        <a class="btn btn-outline-secondary mb-24pt mb-sm-0" data-toggle="modal" data-target="#add_section_modal">Add Section</a>
+                    </div>                    
+                </div>
+            </div>
+
+
+{% endblock %}
+{% block out_header %}
+    {% include 'teacher/_set_video_link_modal.html' %}
+    {% include 'teacher/_add_edit_section_modal.html' %}
+    {% include 'teacher/_delete_section_modal.html' %}
+    {% include 'teacher/_add_edit_lesson_modal.html' %}
+
+{% endblock %}
+{% block extra_script %}
+<script src="/assets/js/edit_course.js"></script>
+<script type="text/javascript">
+var onLoad = function(event){   
+    //Check File API support  
+         
+    $('.lesson-add').click(function(event){            
+        var target = event.target;
+        var section_id = $(target).attr("section-id");
+        var modal_id = '#add_edit_lesson_modal'
+        var form_id = '#add_edit_lesson_modal form'
+        var url = "{% url 'teacher:add_lesson' 5 %}";
+        var str = url.substr(url.lastIndexOf('/') + 1) + '$';
+        url =  url.replace( new RegExp(str), section_id );
+        $(form_id).attr("action", url);
+        $(modal_id).modal({show:true});
+    });
+$('.lesson-edit').click(function(event){            
+        var target = event.target;
+        var lesson_id = $(target).attr("lesson-id");
+        var modal_id = '#add_edit_lesson_modal'
+        var form_id = '#add_edit_lesson_modal form'
+
+        var lesson_title = $(target).siblings('.flex').children('span').text()
+        var video_url = $(target).siblings('.flex').children('a').attr('href')
+        
+        $(modal_id).find('#lesson_title').val(lesson_title)
+        $(modal_id).find('#video_url').val(video_url)
+
+        var action_url = "{% url 'teacher:edit_delete_lesson' 5 %}";
+        var str = action_url.substr(action_url.lastIndexOf('/') + 1) + '$';
+        action_url =  action_url.replace( new RegExp(str), lesson_id );
+       
+        $(form_id).attr("action", action_url);
+        $(modal_id).modal({show:true});
+    });
+    $('.lesson-delete').click(function(event){            
+        var target = event.target;
+        var lesson_id = $(target).attr("lesson-id");
+        var modal_id = '#delete_modal'
+        var form_id = '#delete_modal form'
+        var url = "{% url 'teacher:edit_delete_lesson' 5 %}";
+        var str = url.substr(url.lastIndexOf('/') + 1) + '$';
+        url =  url.replace( new RegExp(str), lesson_id );
+        $(form_id).attr("action", url);
+        $(modal_id).modal({show:true});
+    });
+}
+window.addEventListener("load", onLoad);
+
+</script>
+{% endblock %}

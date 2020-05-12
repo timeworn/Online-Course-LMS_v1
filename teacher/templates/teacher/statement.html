@@ -1,0 +1,157 @@
+{% extends "teacher/base.html" %}
+{% block content %}
+    {{ block.super }}
+                <div class="container page__container page-section">
+                <h4>Transactions</h4>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="float-left">
+                            <input class="datepicker form-control" type="text" value="01/28/2016">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div data-toggle="lists" data-lists-values='[
+        "js-lists-values-course", 
+        "js-lists-values-document",
+        "js-lists-values-amount",
+        "js-lists-values-date"
+      ]' data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" class="table-responsive">
+                        <table class="table table-flush table-nowrap">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-course">Course</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-document">Document</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-amount">Amount</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-date">Date</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+
+
+
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_routing_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="flex">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Angular Routing In-Depth</strong></a><br>
+                                                <small class="text-muted mr-1">
+                                                    Invoice
+                                                    <a href="invoice.html" style="color: inherit;" class="js-lists-values-document">#8734</a> -
+                                                    &dollar;<span class="js-lists-values-amount">89</span> USD
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <small class="text-muted text-uppercase js-lists-values-date">12 Nov 2018</small>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_testing_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="flex">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Angular Unit Testing</strong></a><br>
+                                                <small class="text-muted mr-1">
+                                                    Invoice
+                                                    <a href="invoice.html" style="color: inherit;" class="js-lists-values-document">#8735</a> -
+                                                    &dollar;<span class="js-lists-values-amount">89</span> USD
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <small class="text-muted text-uppercase js-lists-values-date">13 Nov 2018</small>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/typescript_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="flex">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Introduction to TypeScript</strong></a><br>
+                                                <small class="text-muted mr-1">
+                                                    Invoice
+                                                    <a href="invoice.html" style="color: inherit;" class="js-lists-values-document">#8736</a> -
+                                                    &dollar;<span class="js-lists-values-amount">89</span> USD
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <small class="text-muted text-uppercase js-lists-values-date">14 Nov 2018</small>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="flex">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Learn Angular Fundamentals</strong></a><br>
+                                                <small class="text-muted mr-1">
+                                                    Invoice
+                                                    <a href="invoice.html" style="color: inherit;" class="js-lists-values-document">#8737</a> -
+                                                    &dollar;<span class="js-lists-values-amount">89</span> USD
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <small class="text-muted text-uppercase js-lists-values-date">15 Nov 2018</small>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center pagination-sm">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true" class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#" aria-label="1">
+                            <span>1</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="1">
+                            <span>2</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true" class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+{% endblock%}	
+{% block extra_script %}
+<script src="/assets/vendor/list.min.js"></script>
+    <script src="/assets/js/list.js"></script>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+<div class="navbar navbar-expand-sm pr-0 pr-md-16pt mdk-header--fixed mdk-header--shadow navbar-light bg-white" id="default-navbar" data-primary>
+
+  <!-- Navbar toggler -->
+  <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<!-- Navbar Brand -->
+    <a href="index.html" class="navbar-brand">
+      <img class="navbar-brand-icon" src="/assets/images/logo/black-100@2x.png" width="30" alt="{{ brand }}">
+      <span class="d-none d-md-block">{{ brand }}</span>
+    </a>
+
+  <nav class="nav navbar-nav ml-auto flex-nowrap">
+    <div class="nav-item dropdown d-none d-sm-flex ml-16pt">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+        <img width="32" height="32" class="rounded-circle" src="/assets/images/people/50/guy-3.jpg" alt="student" />
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-header"><strong>Instructor</strong></div>
+        <a class="dropdown-item" href="{% url 'teacher:dashboard' %}">Dashboard</a>
+        <a class="dropdown-item" href="{% url 'teacher:manage_courses' %}">Courses</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-header"><strong>Report</strong></div>
+        <a class="dropdown-item" href="{% url 'teacher:earnings' %}">Earning</a>
+        <a class="dropdown-item" href="{% url 'teacher:statement' %}">Statement</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-header"><strong>Account</strong></div>
+        <a class="dropdown-item" href="{% url 'teacher:profile' %}">Profile</a>
+        <a class="dropdown-item" href="student-billing-history.html">Billing</a>
+        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- // END Main Navigation -->
+
+</div>

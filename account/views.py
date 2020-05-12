@@ -34,7 +34,9 @@ class MyLoginView(auth_views.LoginView):
             return redirect('/admin/')
         if user.role == Student:
             return redirect('account:index')
-        else:
+        if user.role == Teacher:
+            return redirect('teacher:dashboard')
+        if user.role == University:
             return redirect('account:pricing')
 
 
@@ -54,7 +56,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_email_verified = True
         user.save()
-        messages.info(request, 'Thank you for your email confirmation. Now you can login your account.' )
+        messages.info(request, 'Thank you for your email confirmation. Now you can login your account.')
         return redirect('login')
         # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:

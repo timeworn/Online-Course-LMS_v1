@@ -1,0 +1,200 @@
+{% extends "teacher/base.html" %}
+{% load widget_tweaks %}
+{% block extra_style %} 
+    <style type="text/css">
+        input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            opacity:0;
+            filter: alpha(opacity=0);
+            height: 100%;
+            max-width: 100%;
+        }
+        #image_upload{
+            position: relative;            
+            width: 100%;
+            text-align: center;
+        }
+        #image_loaded{
+            max-width: 100%;
+            height: 212px;
+        }
+        .display-none{
+            display: none !important;
+        }
+        .input-hide{
+            opacity: 0;
+            position:absolute;
+            top: 50;
+            left:0;
+            height: 0;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+	{{ block.super }}
+    <form action="" method="POST" enctype="multipart/form-data">
+	 <div class="page-section bg-white border-bottom-2">
+                <div class="container page__container">
+                    
+                        {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                                {{hidden}}
+                            {% endfor %}
+                    {{form.errors}}
+                    <div class="row">
+                        <div class="col-md">
+                            <h4>Course title</h4>
+                            <div class="form-group">
+                                {{form.title|add_class:"form-control form-control-lg"|attr:"required"|attr:"placeholder:Course title"}}
+                            </div>
+
+                            <h4>Description</h4>
+                            <div class="form-group">
+                                {{form.description|add_class:"form-control"|attr:"rows:5"|attr:"placeholder:Course description goes here.."}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 >Thumbnail</h4>
+                            <div class="form-group">
+                                <div id="image_upload" class="form-item" style="text-align: center;">
+                                    <i id="image_default" class="fas fa-image fa-10x pointer" style="color: #edf0f2"></i>
+                                    <img id="image_loaded" class="display-none" style="max-width: 100%;">         
+                                    {{form.thumbnail_url|add_class:"upload"|attr:"id:image_field"}}
+                               </div>
+                               
+                            </div>
+                                
+                        </div>
+ 
+                        <div class="col-md-4">
+
+                            <div class="mb-heading d-flex align-items-center">
+                                <h4 class="flex mb-0">Trailer Video</h4>
+                                {{form.trailer_video_link | add_class:"input-hide"}}
+                                <p class="text-underline" data-toggle="modal" data-target="#input_video_link"> Set </p>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="" allowfullscreen="" id="trailer_video_preview"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        {{form.category|add_class:"form-control custom-select"}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group form-inline">
+                                                    <span class="input-group-prepend"><span class="input-group-text">$</span></span>
+                                                    {{form.price | add_class:"form-control"}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row justify-content-end align-items-center">
+                        <div class="col-md-4">
+                            <div class="card m-0">
+                                <div class="card-header text-center">
+                                    <button class="btn btn-accent" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+
+{% endblock %}
+{% block out_header %}
+        <div class="modal" tabindex="-1" id="input_video_link" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class= "modal-title"> Input the Video Embedded Link </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="video_link_url">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="set_trail_link()">Set</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+    var set_trail_link = function(){
+        $('#input_video_link').modal('hide');
+        var str_url = $('#video_link_url').val()
+        $('#id_trailer_video_link').val(str_url)
+        $('#trailer_video_preview').attr("src", str_url);
+
+    }
+    var onLoad = function(event){     
+        //Check File API support  
+        if(window.File && window.FileList && window.FileReader)
+        {
+            var filesInput = document.getElementById("image_field");
+            filesInput.addEventListener("change", function(event){
+                var files = event.target.files; //FileList object
+                var image_loaded = document.getElementById("image_loaded");
+                $('#image_loaded').addClass('display-none')
+                $('#image_default').removeClass('display-none');
+                for(var i = 0; i< files.length; i++)
+                {
+                    var file = files[i];
+                    //Only pics
+                    if(!file.type.match('image'))
+                      continue;
+                    
+                    var picReader = new FileReader();
+                    picReader.title = file.name;
+                    picReader.addEventListener("load",function(event){
+                        var picFile = event.target;
+                        image_loaded.src=picFile.result;
+                        $('#image_loaded').removeClass('display-none')
+                        $('#image_default').addClass('display-none');
+                    });                
+                     //Read the image
+                    picReader.readAsDataURL(file);
+                }          
+            });
+        }
+        else
+        {
+            console.log("Your browser does not support File API");
+            alert("Your browser does not support File API");
+        }
+    }
+    window.addEventListener("load", onLoad);
+    </script>
+{% endblock %}

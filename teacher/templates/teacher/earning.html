@@ -1,0 +1,198 @@
+{% extends "teacher/base.html" %}
+{% block content %}
+    {{ block.super }}
+            <div class="container page__container page-section">
+
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <div class="flex">
+                            <h4 class="card-title">Earnings</h4>
+                            <p class="card-subtitle">This Year</p>
+                        </div>
+                        <div>
+                            <select class="custom-select">
+                                <option selected>2015</option>
+                                <option value="1">2014</option>
+                                <option value="2">2013</option>
+                                <option value="3">2012</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart" style="height: 300px;">
+                            <canvas id="earningsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div data-toggle="lists" data-lists-values='[
+        "js-lists-values-course", 
+        "js-lists-values-revenue",
+        "js-lists-values-fees"
+      ]' data-lists-sort-by="js-lists-values-revenue" data-lists-sort-desc="true" class="table-responsive">
+                        <table class="table table-nowrap table-flush">
+                            <thead>
+                                <tr class="text-uppercase small">
+                                    <th>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-course">Course</a>
+                                    </th>
+                                    <th class="text-center" style="width:130px">
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-fees">Fees</a>
+                                    </th>
+                                    <th class="text-center" style="width:130px">
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-revenue">Revenue</a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+
+
+                            <tbody class="list">
+
+                                <tr>
+                                    <td>
+                                        <div class="media flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_routing_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Angular Routing In-Depth</strong></a>
+                                                <div class="text-muted small">34 Sales</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-black-70">
+
+                                        &dollar;<span class="js-lists-values-fees">120</span> USD
+
+                                    </td>
+                                    <td class="text-center text-black-70">
+                                        &dollar;<span class="js-lists-values-revenue">8,737</span> USD
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_testing_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Angular Unit Testing</strong></a>
+                                                <div class="text-muted small">38 Sales</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-black-70">
+
+                                        <span class="js-lists-values-fees sr-only">0</span>
+                                        <i class="material-icons text-muted">remove</i>
+
+                                    </td>
+                                    <td class="text-center text-black-70">
+                                        &dollar;<span class="js-lists-values-revenue">2,521</span> USD
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/typescript_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Introduction to TypeScript</strong></a>
+                                                <div class="text-muted small">8 Sales</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-black-70">
+
+                                        <span class="js-lists-values-fees sr-only">0</span>
+                                        <i class="material-icons text-muted">remove</i>
+
+                                    </td>
+                                    <td class="text-center text-black-70">
+                                        &dollar;<span class="js-lists-values-revenue">1,413</span> USD
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="media flex-nowrap align-items-center">
+                                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                                <img src="/assets/images/paths/angular_200x168.png" alt="course" class="avatar-img rounded">
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="text-body js-lists-values-course" href="instructor-edit-course.html"><strong>Learn Angular Fundamentals</strong></a>
+                                                <div class="text-muted small">31 Sales</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-black-70">
+
+                                        <span class="js-lists-values-fees sr-only">0</span>
+                                        <i class="material-icons text-muted">remove</i>
+
+                                    </td>
+                                    <td class="text-center text-black-70">
+                                        &dollar;<span class="js-lists-values-revenue">1,234</span> USD
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot class="text-right">
+                                <tr>
+                                    <td colspan="3">Total <i class="material-icons text-muted">remove</i> <strong>&dollar;6,129 USD</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center pagination-sm">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true" class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#" aria-label="1">
+                            <span>1</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="1">
+                            <span>2</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true" class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+{% endblock %}
+{% block extra_script %}
+    <!-- Global Settings -->
+    <script src="/assets/js/settings.js"></script>
+
+    <!-- Chart.js -->
+    <script src="/assets/vendor/Chart.min.js"></script>
+
+    <!-- UI Charts Page JS -->
+    <script src="/assets/js/chartjs-rounded-bar.js"></script>
+    <script src="/assets/js/chartjs.js"></script>
+
+    <!-- Chart.js Samples -->
+    <script src="/assets/js/page.instructor-earnings.js"></script>
+
+    <!-- List.js -->
+    <script src="/assets/vendor/list.min.js"></script>
+    <script src="/assets/js/list.js"></script>
+{% endblock%}
