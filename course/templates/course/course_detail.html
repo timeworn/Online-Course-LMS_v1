@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_style %}
+<style type="text/css">
+    @keyframes lesson-anim-hide {
+      from {max-height: 500px;}
+      to {max-height: 0px;}
+    }
+    @keyframes lesson-anim-show {
+      from {max-height: 0px;}
+      to {max-height: 500px;}
+    }
+    @keyframes pay-anim-show {
+      /*from {background-color: red;}*/
+      from {max-height: 0px}
+      to {max-height: 500px;}
+    }
+    @keyframes pay-anim-hide {
+      /*from {background-color: red;}*/
+      from {max-height: 500px}
+      to {max-height: 0px;}
+    }
+    #payment-card{
+        overflow: hidden;
+        max-height: 0px;
+    }
+    #payment-card.show {
+        animation-name: pay-anim-show;
+        animation-fill-mode: forwards;
+        animation-duration: 1s;
+    }
+    #payment-card.hide {
+        overflow: hidden;
+        animation-name: pay-anim-hide;        
+        animation-duration: 1s;
+    }
+    #lesson-card.hide{
+        overflow: hidden;
+        animation-name: lesson-anim-hide;
+        animation-fill-mode: forwards;
+        animation-duration: 1s;
+    }
+    #lesson-card.show{
+        overflow: hidden;
+        animation-name: lesson-anim-show;
+        animation-duration: 1s;
+    }
+    .cursor-pointer{
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="mdk-box bg-dark mdk-box--bg-gradient-primary js-mdk-box mb-0" data-effects="blend-background">
+                <div class="mdk-box__content">
+                    <div class="hero py-64pt text-center text-sm-left">
+                        <div class="container">
+                            <h1 class="text-white">{{course.title}}</h1>
+                            <p class="lead text-white-50 measure-hero-lead">{{course.description}}</p>
+                            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
+                                <a href="lesson.html" class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i class="material-icons icon--right">play_circle_outline</i></a>
+                                {% if not user.is_authenticated %}
+                                <a href="pricing.html" class="btn btn-white">Start your free trial</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar navbar-expand-sm navbar-submenu navbar-light navbar-list p-0 m-0 align-items-center">
+                <div class="container page__container">
+                    <ul class="nav navbar-nav flex align-items-sm-center">
+                        <li class="nav-item navbar-list__item">
+                            <div class="media align-items-center">
+                                <span class="media-left mr-16pt">
+                                    <img src="/assets/images/people/50/guy-6.jpg" width="40" alt="avatar" class="rounded-circle">
+                                </span>
+                                <div class="media-body">
+                                    <a class="card-title m-0" href="instructor-profile.html">{{course.author.get_full_name}}</a>
+                                    <p class="text-50 lh-1 mb-0">Instructor</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
+                            <div class="rating rating-24">
+                                <div class="rating__item"><i class="material-icons">star</i></div>
+                                <div class="rating__item"><i class="material-icons">star</i></div>
+                                <div class="rating__item"><i class="material-icons">star</i></div>
+                                <div class="rating__item"><i class="material-icons">star</i></div>
+                                <div class="rating__item"><i class="material-icons">star_border</i></div>
+                            </div>
+                            <p class="lh-1 mb-0"><small class="text-muted">20 ratings</small></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-section border-bottom-2">
+                <div class="container page__container">
+
+                    <h4>Table of Contents</h4>
+                    <div class="card-group card-group--lg-up mb-0" id="lesson-card">
+                        <div class="card col-lg-0 p-0">
+
+                            <ul class="accordion accordion--boxed js-accordion list-group-flush" id="course-toc">
+                                <li class="accordion__item open">
+                                    <a class="accordion__toggle" data-toggle="collapse" data-parent="#course-toc" href="#course-toc-1">
+                                        <span class="flex">Course Overview</span>
+                                        <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
+                                    </a>
+                                    <div class="accordion__menu">
+                                        <ul class="list-unstyled collapse show" id="course-toc-1">
+                                            <li class="accordion__menu-link active">
+                                                <span class="material-icons icon-16pt icon--left text-primary">play_circle_outline</span>
+                                                <a class="flex" href="{% url 'course:watch_trailor' course.pk %}">Watch Trailer</a>
+                                                <span class="text-muted">1m 10s</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% for section in course.section_set.all %}
+                                <li class="accordion__item open">
+                                    <a class="accordion__toggle" data-toggle="collapse" data-parent="#course-toc" href="#course-toc-2">
+                                        <span class="flex">{{section.title}}</span>
+                                        <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
+                                    </a>
+                                    <div class="accordion__menu">
+                                        <ul class="list-unstyled collapse show" id="course-toc-2">
+                                            {% for lesson in section.lesson_set.all %}
+                                            <li class="accordion__menu-link">
+                                                {% if not is_purchased_course %}
+                                                <span class="material-icons icon-16pt icon--left text-muted">lock</span>
+                                                <a class="flex">{{lesson.title}}</a>
+                                                {% else %}
+                                                <span class="material-icons icon-16pt icon--left text-primary">play_circle_outline</span>
+                                                <a class="flex" href="{% url 'course:lesson' lesson.pk %}">{{lesson.title}}</a>
+                                                {% endif %}
+
+                                                
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endfor %}                                
+
+                        </div>
+                        {% if not user.is_authenticated %}
+                        <div class="card col-lg-5 p-0 mb-0 justify-content-center border-left-lg">
+                            <div class="card-body flex-0 text-center">
+                                <div>
+                                    <i class="material-icons text-muted">timer</i>
+                                </div>
+                                <h4 class="my-8pt"><strong>Unlock All Videos</strong></h4>
+                                <p class="text-70 mb-24pt">Get access to all videos in the library</p>
+                                <a href="pricing.html" class="btn btn-outline-primary mb-8pt">Get started</a>
+                                <p>Have an account? <a href="login.html">Login</a></p>
+                            </div>
+                        </div>
+                        {% else %}
+                            {% if not is_purchased_course %}
+                            <div class="card col-lg-5 p-0 mb-0 justify-content-center border-left-lg">
+                                <div class="card-body flex-0 text-center">
+                                    <div>
+                                        <i class="material-icons text-muted">timer</i>
+                                    </div>
+                                    <h4 class="my-8pt"><strong>Purchase this course</strong></h4>
+                                    <button class="btn btn-accent mb-8pt" id="pay-btn">Pay ${{course.price}}</button>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        {% endif %}
+                    </div>
+                    <div class="card-group card-group--lg-up mb-0" id="payment-card">
+                        <div class="card col-lg-0 p-0">
+                            <div class="list-group list-group-form mb-0">
+                                <div class="list-group-item">
+                                    <fieldset role="group" aria-labelledby="label-type" class="m-0 form-group">
+                                        <div class="form-row">
+                                            <label for="payment_cc" id="label-type" class="col-md-3 col-form-label form-label">Payment type</label>
+                                            <div role="group" aria-labelledby="label-type" class="col-md-8">
+                                                <div role="group" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-outline-secondary active">
+                                                        <input type="radio" id="payment_cc" name="payment_type" value="cc" checked="" aria-checked="true" /> Debit or credit card
+                                                    </label>
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="radio" id="payment_pp" name="payment_type" value="pp" aria-checked="true" /> PayPal
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 text-right cursor-pointer">
+                                                <span class="material-icons" id="payment-close-btn">
+                                                    close
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="form-group row mb-0">
+                                        <label class="col-form-label col-sm-3">Card number</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="Credit / debit card number" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="form-group row mb-0 align-items-center">
+                                        <label class="col-form-label col-sm-3">Security code (CVV)</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="CVV" style="width:80px">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="form-group row mb-0">
+                                        <label class="col-form-label col-sm-3">Expiration date</label>
+                                        <div class="col-sm-9">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-16pt mb-sm-0">
+                                                    <select class="custom-control custom-select form-control">
+                                                        <option value="1">January</option>
+                                                        <option value="2">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">Novemeber</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select class="custom-control custom-select form-control">
+                                                        <option value="1" selected="">2016</option>
+                                                        <option value="2">2017</option>
+                                                        <option value="3">2018</option>
+                                                        <option value="3">2019</option>
+                                                        <option value="3">2020</option>
+                                                        <option value="3">2021</option>
+                                                        <option value="3">2022</option>
+                                                        <option value="3">2023</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item text-center">
+                                    <a href="{% url 'course:pay' course.pk %}" class="btn btn-lg btn-accent"> Pay Now</a>
+                                    <!-- <button type="submit" class="btn btn-lg btn-accent">Pay Now</button> -->
+                                </div>
+                            </div>          
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+{% block out_header %}
+	{% include 'course/_modal.html'%}
+{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+$('#pay-btn').on('click', function() {
+    $('#payment-card').removeClass('hide');
+    $('#payment-card').addClass('show');
+    $('#lesson-card').removeClass('show');
+    $('#lesson-card').addClass('hide');
+});    
+$('#payment-close-btn').on('click', function(){
+    $('#payment-card').addClass('hide');
+    $('#payment-card').removeClass('show');
+    $('#lesson-card').addClass('show');
+    $('#lesson-card').removeClass('hide');
+})
+</script>
+
+{% endblock %}

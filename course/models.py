@@ -55,9 +55,9 @@ class Lesson(models.Model):  # lesson subsection of Section
         return self.title
 
 
-# class StudentCourses(models.Model):
-#     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-#     course = models.ForeignKey('Course', on_delete=models.CASCADE)
+class StudentCourses(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
 
 
 # class PlatformFeedback(models.Model):

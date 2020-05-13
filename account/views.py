@@ -33,7 +33,7 @@ class MyLoginView(auth_views.LoginView):
         if user.is_superuser:
             return redirect('/admin/')
         if user.role == Student:
-            return redirect('account:index')
+            return redirect('student:my_courses')
         if user.role == Teacher:
             return redirect('teacher:dashboard')
         if user.role == University:

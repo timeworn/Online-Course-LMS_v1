@@ -13,7 +13,7 @@ def role_required(function=None, role=Student):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
             if not request.user.is_authenticated:
-                redirect('login')
+                return redirect('login')
             if not request.user.role == role:
                 return redirect('login')
             if not request.user.is_email_verified:

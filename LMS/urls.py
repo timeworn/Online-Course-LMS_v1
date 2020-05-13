@@ -31,7 +31,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
     path('account/', include('django.contrib.auth.urls')),
-    path('teacher/', include('teacher.urls'))
+    path('teacher/', include('teacher.urls')),
+    path('student/', include('student.urls')),
+    path('', include('course.urls'))
 ]
 
 if settings.DEBUG:

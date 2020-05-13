@@ -1,0 +1,27 @@
+<!-- drawer -->
+    <div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+        <div class="mdk-drawer__content">
+            <div class="sidebar sidebar-left ps sidebar-light" data-perfect-scrollbar>
+                <div class="sidebar-p-a sidebar-b-b sidebar-m-b pt-0">
+
+                    <!-- Brand -->
+                    <a href="index.html" class="sidebar-brand">
+                        <img class="sidebar-brand-icon" src="/assets/images/logo/black-100@2x.png" width="30" alt="{{brand}}">
+                        <span>{{brand}}</span>
+                    </a>
+                    <!-- // END Brand -->
+                </div>
+                <div class="dropdown-header"><strong>Student</strong></div>
+                <a class="dropdown-item" href="{% url 'teacher:dashboard' %}">Dashboard</a>
+                <a class="dropdown-item" href="{% url 'teacher:manage_courses' %}">Courses</a>
+                <div class="dropdown-divider"></div>
+                
+                <div class="dropdown-header"><strong>Account</strong></div>
+                <a class="dropdown-item" href="{% url 'teacher:profile' %}">Profile</a>
+                <a class="dropdown-item" href="student-billing-history.html">Billing</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                
+            </div>
+        </div>
+    </div>
+    <!-- // END drawer -->

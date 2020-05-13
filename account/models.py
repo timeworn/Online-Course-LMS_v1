@@ -19,9 +19,17 @@ class User(AbstractUser):
     is_email_verified = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=True)  # Admin verify the user
 
+    def is_purchased(self, course):
+        if self.is_authenticated:
+            if self.role == Student:
+                return self.studentprofile.courses.filter(pk=course.pk).exists()
+        return False
+
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    courses = models.ManyToManyField('course.Course', through='course.StudentCourses', related_name='students')
+    last_course = models.OneToOneField('course.Course', null=True, on_delete=models.CASCADE)
 
 
 class TeacherProfile(models.Model):

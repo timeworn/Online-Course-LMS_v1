@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django_countries',
     'widget_tweaks',
     'teacher',
-    'course'
+    'course',
+    'student'
 ]
 
 MIDDLEWARE = [
