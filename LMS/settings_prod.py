@@ -7,7 +7,7 @@ MEDIA_ROOT = '/var/www/html/BookApp/upload'
 MEDIA_URL = '/media/'
 
 print("Debug Flase")
-DOMAIN = '103.100.62.146'
+DOMAIN = 'online-lms.herokuapp.com'
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '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')
 
