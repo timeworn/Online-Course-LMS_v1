@@ -126,9 +126,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/assets/'
-
-
 LOGOUT_REDIRECT_URL = 'login'
 Env = os.environ.get('DJANGO_ENV', 'local')
 print(Env)
@@ -138,3 +135,8 @@ elif Env == 'prod':
     print("import")
     from .settings_prod import *
     django_heroku.settings(locals())
+
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "assets"),
+]

@@ -1,2 +1,2 @@
 release: chmod u+x migration.sh && ./migration.sh
-web: python manage.py runserver 0.0.0.0:5000
+web: gunicorn LMS.wsgi --log-file -
