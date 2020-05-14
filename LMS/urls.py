@@ -22,6 +22,7 @@ Including another URLconf
     account/ password_reset/done/ [name='password_reset_done']
     account/ reset/<uidb64>/<token>/ [name='password_reset_confirm']
     account/ reset/done/ [name='password_reset_complete']
+    HI
 """
 from django.contrib import admin
 from django.urls import path, include
