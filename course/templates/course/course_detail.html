@@ -72,9 +72,9 @@
                             <h1 class="text-white">{{course.title}}</h1>
                             <p class="lead text-white-50 measure-hero-lead">{{course.description}}</p>
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-                                <a href="lesson.html" class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i class="material-icons icon--right">play_circle_outline</i></a>
+                                <a href="{% url 'course:watch_trailor' course.pk %}" class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i class="material-icons icon--right">play_circle_outline</i></a>
                                 {% if not user.is_authenticated %}
-                                <a href="pricing.html" class="btn btn-white">Start your free trial</a>
+                                <a href="{% url 'account:pricing' %}" class="btn btn-white">Start your free trial</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -168,8 +168,8 @@
                                 </div>
                                 <h4 class="my-8pt"><strong>Unlock All Videos</strong></h4>
                                 <p class="text-70 mb-24pt">Get access to all videos in the library</p>
-                                <a href="pricing.html" class="btn btn-outline-primary mb-8pt">Get started</a>
-                                <p>Have an account? <a href="login.html">Login</a></p>
+                                <a href="{% url 'account:pricing' %}" class="btn btn-outline-primary mb-8pt">Get started</a>
+                                <p>Have an account? <a href="{% url 'login' %}">Login</a></p>
                             </div>
                         </div>
                         {% else %}

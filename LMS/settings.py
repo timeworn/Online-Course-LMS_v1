@@ -127,6 +127,8 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 
+
+LOGOUT_REDIRECT_URL = 'login'
 Env = os.environ.get('DJANGO_ENV', 'local')
 print(Env)
 if Env == 'local':

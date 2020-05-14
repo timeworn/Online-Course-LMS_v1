@@ -41,7 +41,7 @@
                         <h4 class="card-title">Earnings</h4>
                         <p class="card-subtitle">Last Week vs. Previous Week</p>
                     </div>
-                    <a href="instructor-earnings.html" class="text-underline">View Earnings</a>
+                    <a href="{% url 'teacher:earnings' %}" class="text-underline">View Earnings</a>
                 </div>
                 <div class="card p-24pt mb-32pt">
                     <div class="chart" style="height: 320px;">
@@ -57,7 +57,7 @@
                                 <h4 class="card-title">Transactions</h4>
                                 <p class="card-subtitle">Latest Transactions</p>
                             </div>
-                            <a href="instructor-statement.html" class="text-underline">Statement</a>
+                            <a href="{% url 'teacher:statement' %}" class="text-underline">Statement</a>
                         </div>
                         <div class="card">
                             <div data-toggle="lists" data-lists-values='[

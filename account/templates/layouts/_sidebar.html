@@ -5,7 +5,7 @@
                 <div class="sidebar-p-a sidebar-b-b sidebar-m-b pt-0">
 
                     <!-- Brand -->
-                    <a href="index.html" class="sidebar-brand">
+                    <a href="{% url 'course:index' %}" class="sidebar-brand">
                         <img class="sidebar-brand-icon" src="/assets/images/logo/black-100@2x.png" width="30" alt="{{brand}}">
                         <span>{{brand}}</span>
                     </a>
@@ -21,7 +21,7 @@
 
                 <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-button" href="index.html">Home Page</a>
+                        <a class="sidebar-menu-button" href="{% url 'course:index' %}">Home Page</a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-button" data-toggle="collapse" href="#catalog_menu">
@@ -134,10 +134,10 @@
                         </a>
                         <ul class="sidebar-submenu collapse show sm-indent" id="account_menu">
                             <li class="sidebar-menu-item">
-                                <a class="sidebar-menu-button" href="pricing.html">Pricing</a>
+                                <a class="sidebar-menu-button" href="{% url 'account:pricing' %}">Pricing</a>
                             </li>
                             <li class="sidebar-menu-item active">
-                                <a class="sidebar-menu-button" href="login.html">Login</a>
+                                <a class="sidebar-menu-button" href="{% url 'login' %}">Login</a>
                             </li>
                             <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="signup.html">Signup</a>

@@ -3,31 +3,22 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col-6 col-md-4 mb-24pt mb-md-0">
-                                    <h4 class="text-70">Learn</h4>
-                                    <nav class="nav nav-links nav--flush flex-column">
-                                        <a class="nav-link" href="library.html">Library</a>
-                                        <a class="nav-link" href="library-featured.html">Featured</a>
-                                        <a class="nav-link" href="library-filters.html">Explore</a>
-                                        <a class="nav-link" href="paths.html">Learning Paths</a>
-                                    </nav>
-                                </div>
+     
                                 <div class="col-6 col-md-4 mb-24pt mb-md-0">
                                     <h4 class="text-70">Join us</h4>
                                     <nav class="nav nav-links nav--flush flex-column">
-                                        <a class="nav-link" href="pricing.html">Pricing</a>
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="signup.html">Sign Up</a>
-                                        <a class="nav-link" href="signup-payment.html">Payment</a>
+                                        <a class="nav-link" href="{% url 'account:pricing' %}">Pricing</a>
+                                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                        <a class="nav-link" href="{% url 'account:signup' 'Student' %}">Sign Up</a>
                                     </nav>
                                 </div>
                                 <div class="col-6 col-md-4 mb-32pt mb-md-0">
                                     <h4 class="text-70">Community</h4>
                                     <nav class="nav nav-links nav--flush flex-column">
-                                        <a class="nav-link" href="student-discussions.html">Discussions</a>
-                                        <a class="nav-link" href="student-discussions-ask.html">Ask Question</a>
-                                        <a class="nav-link" href="student-profile.html">Student Profile</a>
-                                        <a class="nav-link" href="instructor-profile.html">Instructor Profile</a>
+                                        <a class="nav-link" href="">Discussions</a>
+                                        <a class="nav-link" href="">Ask Question</a>
+                                        <a class="nav-link" href="">Student Profile</a>
+                                        <a class="nav-link" href="">Instructor Profile</a>
                                     </nav>
                                 </div>
                             </div>

@@ -50,7 +50,10 @@ def index(request):
 
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
-    is_purchased_course = request.user.is_purchased(course)
+    if request.user.is_authenticated:
+        is_purchased_course = request.user.is_purchased(course)
+    else:
+        is_purchased_course = False
     return render(request, 'course/course_detail.html', {'course': course, 'is_purchased_course': is_purchased_course})
 
 
@@ -72,4 +75,4 @@ def lesson(request, pk):
 
 def watch_trailor(request, pk):
     course = get_object_or_404(Course, pk=pk)
-    return render(request, 'course/watch_trailor.html', {'course': Course})
+    return render(request, 'course/watch_trailor.html', {'course': course})

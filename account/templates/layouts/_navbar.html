@@ -22,13 +22,13 @@
   {% if not user.is_authenticated %}
     <ul class="nav navbar-nav ml-auto flex-nowrap" style="white-space: nowrap;">
       <li class="ml-16pt nav-item">
-        <a href="login.html" class="nav-link">
+        <a href="{% url 'login' %}" class="nav-link">
           <i class="material-icons">lock_open</i>
           <span class="sr-only">Login</span>
         </a>
       </li>
       <li class="d-none d-sm-flex nav-item">
-        <a href="pricing.html" class="btn btn-accent">Get started</a>
+        <a href="{% url 'account:pricing' %}" class="btn btn-accent">Get started</a>
       </li>
     </ul>
   {% else %}
