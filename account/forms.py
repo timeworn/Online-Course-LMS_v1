@@ -24,7 +24,7 @@ def send_email_verification_code( user, to_email):
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
-    email = EmailMessage(email_subject, message, to=[to_email])
+    email = EmailMessage(email_subject, message,from_email=settings.FROM_EMAIL, to=[to_email])
     email.send()
 
 

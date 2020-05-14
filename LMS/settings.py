@@ -121,7 +121,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+FROM_EMAIL = os.environ.get('DJANGO_FROM_EMAIL', 'ambition.t109@gmail.com')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
