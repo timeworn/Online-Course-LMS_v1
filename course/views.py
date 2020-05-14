@@ -3,25 +3,44 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from account.decorators import role_required
 from LMS.constants import Student
-from .models import Course, Lesson
+from .models import Course, Lesson, Category
 # Create your views here.
 
 
 def filter(request):
     if request.method == 'GET':
-        per_page = 10
+        per_page = 3
         category = request.GET.get('category', None)
         search = request.GET.get('search', None)
+        sort_by = request.GET.get('sort_by', None)
         queryset = Course.objects
         if category:
             queryset = queryset.filter(category__id=category)
         if search:
             queryset = queryset.filter(Q(title__contains=search) | Q(description__contains=search))
+        if sort_by == 'OF':
+            queryset = queryset.order_by('updated_at')
+        elif sort_by == 'TAZ':
+            queryset = queryset.order_by('title')
+        elif sort_by == 'TZA':
+            queryset = queryset.order_by('-title')
+        else:
+            queryset = queryset.order_by('-updated_at')
+
         course_list = queryset.all()
+
         paginator = Paginator(course_list, per_page)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'course/filters.html', {'page_obj': page_obj})
+        categorys = Category.objects.all()
+
+        params = request.GET.dict()
+        if category:
+            params['category'] = int(params['category'])
+            params['category_name'] = Category.objects.get(pk=category).name
+        if not sort_by:
+            params['sort_by'] = 'NF'
+        return render(request, 'course/filters.html', {'page_obj': page_obj, 'categorys': categorys, 'params': params})
 
 
 def index(request):
@@ -48,7 +67,7 @@ def lesson(request, pk):
     course = lesson.section.course
     if not request.user.is_purchased(course):
         return redirect('course:course_detail', pk=course.pk)
-    return render(request, 'course/lesson.html', {'lesson': lesson, 'course':course})
+    return render(request, 'course/lesson.html', {'lesson': lesson, 'course': course})
 
 
 def watch_trailor(request, pk):

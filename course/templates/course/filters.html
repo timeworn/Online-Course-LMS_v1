@@ -1,4 +1,178 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_style %}
+<style type="text/css">
+	.mdk-drawer-layout #filters-drawer[data-persistent] .mdk-drawer__content {
+	    position: relative !important;
+	}
+</style>
+{% endblock %}
 {% block content %}
+<div class="navbar navbar-expand-sm navbar-list navbar-submenu navbar-light p-0 m-0">
+    <div class="container-fluid align-items-start align-items-sm-center">
+        <div class="navbar-list__item">
+            <nav class="nav nav-links nav--flush">
+                <a data-toggle="sidebar" data-target="#filters-drawer" class="active nav-link d-flex align-items-center"><span class="material-icons mx-4pt">close</span> Filter &amp; Refine</a>
+            </nav>
+        </div>
+        <div class="navbar-list__item d-md-flex ml-md-auto mr-sm-24pt">
+						<div class="search-form search-form--light input-group-lg">
+                            <input type="text" class="form-control" placeholder="..." id="search_text" value="{{params.search}}">
+                            <button class="btn" type="button" role="button" onclick="set_search_word()"><i class="material-icons">search</i></button>
+                        </div>
+        </div>
+        <div class="navbar-list__item d-flex align-items-center">
+            <!-- <nav class="nav nav-links nav--flush mr-24pt">
+                <a href="library-filters.html" class="mr-4pt nav-link active"><i class="material-icons">view_module</i></a>
+                <a href="library-filters-list.html" class="nav-link"><i class="material-icons icon--left">list</i></a>
+            </nav> -->
+            <div class="ml-auto custom-select-icon">
+                <select name="sort" class="custom-select custom-select-sm custom-select-icon__select" id="sort_type">
+                    <option {% if params.sort_by == 'NF' %} selected {% endif %} value="NF">Newest first</option>
+                    <option {% if params.sort_by == 'OF' %} selected {% endif %} value="OF">Oldest first</option>
+                    <option {% if params.sort_by == 'TAZ' %} selected {% endif %} value="TAZ">Title (a-z)</option>
+                    <option {% if params.sort_by == 'TZA' %} selected {% endif %} value="TZA">Title (z-a)</option>
+                </select>
+                <span class="material-icons custom-select-icon__icon">sort</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Result Section -->
+<div class="mdk-drawer-layout js-mdk-drawer-layout" data-responsive-width="768px" data-push>
+
+                <!-- content -->
+                <div class="mdk-drawer-layout__content">
+                    <div class="page-section">
+                        <div class="container page__container">
+
+
+                            <div class="page-heading">
+                                <h4>Courses</h4>
+                                <p class="ml-sm-auto text-70 mb-0"><strong>{{page_obj.paginator.count}}</strong> results in {% if params.category == '' or not params.category %}All categories{% else %}
+                                	<span class="category-item text-underline">All categories</span>/ {{params.category_name}}
+                                	{% endif %}
+                                </p>
+                            </div>
+                            <div class="row">
+                            	{% for course in page_obj %}
+                                	<div class="col-lg-4 col-xl-3 col-sm-6">
+                                	
+                                		{% include 'layouts/_ui_cards.html' with course=course card_type='favorite' %}
+									
+                                	</div>
+                                {% endfor %}
+                            </div>
+                            <ul class="pagination justify-content-center pagination-sm">
+                            	
+                            	<li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+                                    <a class="page-link" href="javascript:void(0)" aria-label="Previous" {% if  page_obj.has_previous %} page-number={{page_obj.previous_page_number}} {% endif %}>
+                                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                        <span>Prev</span>
+                                    </a>
+                                </li>
+                        	
+                                
+                                <li class="page-item active">
+                                    <a class="page-link" href="#" aria-label="1" page-number ={{page_obj.number}}>
+                                        <span> {{page_obj.number}} of {{page_obj.paginator.num_pages }}</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" {% if not page_obj.has_next %} disabled {% endif %}>
+                                    <a class="page-link" href="javascript:void(0)" aria-label="Next" {% if page_obj.has_next %} page-number={{ page_obj.next_page_number }} {% endif %}>
+                                        <span>Next</span>
+                                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                                    </a>
+                                </li>
+                            </ul>
+                   		</div>
+                    </div>
+                </div>
+                                <!-- drawer -->
+                <div class="mdk-drawer js-mdk-drawer" id="filters-drawer">
+                    <div class="mdk-drawer__content">
+                        <div class="mdk-drawer__inner" data-perfect-scrollbar data-perfect-scrollbar-wheel-propagation="true">
+                            <div class="pt-md-32pt pt-lg-64pt">
+                                <div class="px-24pt mb-24pt mb-md-48pt filter-section">
+                                    <ul class="accordion js-accordion m-0" id="library-category">
+                                        <li class="accordion__item open">
+                                            <a class="accordion__toggle" data-toggle="collapse" data-parent="#library-category" href="#library-all">
+                                                <span class="flex">Category</span>
+                                                <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
+                                            </a>
+                                            <nav class="accordion__menu collapse show" id="library-all">
+                                            	<a class="accordion__menu-link {% if params.category == '' or not params.category %} active {% endif %} category-item">All categories</a>
+                                            	{% for category in categorys %}
+
+
+                                            		<a href="javascript:void(0)" class="{% if params.category == category.pk %} active {% endif %} accordion__menu-link category-item" category-id = {{category.id}} > {{category.name}}</a>
+                                            	{% endfor %}
+                                            </nav>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+	var addParamToUrl= function(param, value){
+        	var UrlInstance = new URL(window.location);
+        	console.log(UrlInstance)
+			var search_params = UrlInstance.searchParams;
+			search_params.set(param, value)
+			UrlInstance.search = search_params.toString();
+			var url = UrlInstance.toString();
+            return url;
+        }
+		var set_search_word = function(){
+			var search_text = $('#search_text').val()
+			var url = addParamToUrl('search', search_text);
+			window.location.href =url;
+
+		}
+
+	$(document).ready(function(){
+		
+
+
+		$('.category-item').click(function(event){
+			var target = event.target;
+			var category_id = $(target).attr('category-id');
+			if (!category_id)
+				category_id=''
+			var url = addParamToUrl('category', category_id);
+			window.location.href =url;
+		})
+		$('.page-link').click(function(event){
+			alert()
+			console.log(event)
+			var target = event.delegateTarget;
+			console.log(target)
+			var pagenumber = $(target).attr('page-number');
+			alert(pagenumber)
+			if (pagenumber)
+			{
+				var url = addParamToUrl('page', pagenumber);
+				window.location.href =url;	
+			}
+			
+		})
+		$('#sort_type').change(function(event){
+			var target = event.delegateTarget;
+			var sort_type = $(target).val()
+			if(sort_type){
+				var url = addParamToUrl('sort_by', sort_type);
+				window.location.href =url;
+			}
+		});
+	})
+</script>
 {% endblock %}

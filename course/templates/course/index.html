@@ -81,7 +81,9 @@
 
                     <div class="row">
                     	{% for course in top_courses %}
-                    		{% include 'layouts/_ui_cards.html' with course=course card_type='favorite'%}
+                            <div class="col-sm-6 col-md-4 col-xl-3">    
+                        		{% include 'layouts/_ui_cards.html' with course=course card_type='favorite'%}
+                            </div>
                     	{% endfor %}
                     </div>
                     <div class="pt-md-16pt text-center">
@@ -90,7 +92,4 @@
                 </div>
             </div>
             
-{% endblock %}
-{% block out_header %}
-	{% include 'course/_modal.html'%}
 {% endblock %}
