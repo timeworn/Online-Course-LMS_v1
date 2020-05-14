@@ -13,7 +13,7 @@ class User(AbstractUser):
         (University, 'University')
     ]
     role = models.CharField(max_length=10, choices=USER_ROLE, default=Student)
-    avatar_url = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    avatar_url = models.ImageField()
     about_me = models.TextField()
     subscribed = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
