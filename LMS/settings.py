@@ -138,4 +138,4 @@ elif Env == 'prod':
     print("import")
     from .settings_prod import *
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
